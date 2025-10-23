@@ -1,6 +1,6 @@
 <!-- PROJECT LOGO -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/mosesmmoisebidth/mocp/main/docs/send_receive.ico" alt="MOCP Logo" width="120">
+  <img src="https://raw.githubusercontent.com/mosesmmoisebidth/mocp/send_receive.ico" alt="MOCP Logo" width="120">
 </p>
 
 <h1 align="center">🛰️ MOCP — File Transfer Made Simple</h1>
