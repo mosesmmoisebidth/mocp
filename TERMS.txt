@@ -1,0 +1,23 @@
+Mocp End User License Agreement (EULA)
+
+Please read these terms and conditions carefully before using Mocp.
+
+1. License
+By installing Mocp, you agree to be bound by the terms of this license.
+
+2. Usage
+You may use Mocp for personal and commercial purposes. Redistribution requires permission.
+
+3. Disclaimer
+Mocp is provided "as is" without warranty of any kind. The author is not liable for damages.
+
+4. Privacy
+Mocp does not collect personal data unless explicitly enabled by the user.
+
+5. Third-Party
+Mocp may include third-party libraries. Those libraries have their own licenses.
+
+6. Contact
+For questions: https://moses.it.com
+
+By clicking "I accept" you agree to these terms.

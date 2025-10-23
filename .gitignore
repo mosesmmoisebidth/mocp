@@ -1,0 +1,10 @@
+mocp.exe
+qrcp.exe
+*.exe
+README.md
+*.log
+*.tmp
+*.trunk
+file_example.pdf
+*.pdf
+Output

@@ -1,0 +1,69 @@
+package cmd
+
+import (
+	"fmt"
+
+	"github.com/claudiodangelis/qrcp/config"
+	"github.com/claudiodangelis/qrcp/logger"
+	"github.com/claudiodangelis/qrcp/qr"
+	"github.com/claudiodangelis/qrcp/server"
+	"github.com/eiannone/keyboard"
+	"github.com/spf13/cobra"
+)
+
+func receiveCmdFunc(command *cobra.Command, args []string) error {
+	log := logger.New(app.Flags.Quiet)
+	server.ShowStartupBanner()
+	// Load configuration
+	cfg := config.New(app)
+	// Create the server
+	srv, err := server.New(&cfg)
+	if err != nil {
+		server.ShowError(err)
+		return err
+	}
+	// Sets the output directory
+	if err := srv.ReceiveTo(cfg.Output); err != nil {
+		server.ShowError(err)
+		return err
+	}
+	// Prints the URL to scan to screen
+	server.ShowQRCode()
+	// Renders the QR
+	qr.RenderString(srv.ReceiveURL, cfg.Reversed)
+	if app.Flags.Browser {
+		srv.DisplayQR(srv.ReceiveURL)
+	}
+	if err := keyboard.Open(); err == nil {
+		defer func() {
+			keyboard.Close()
+		}()
+		go func() {
+			for {
+				char, key, _ := keyboard.GetKey()
+				if string(char) == "q" || key == keyboard.KeyCtrlC {
+					srv.Shutdown()
+				}
+			}
+		}()
+	} else {
+		log.Print(fmt.Sprintf("Warning: keyboard not detected: %v", err))
+	}
+	if err := srv.Wait(); err != nil {
+		return err
+	}
+	return nil
+}
+
+var receiveCmd = &cobra.Command{
+	Use:     "receive",
+	Aliases: []string{"r"},
+	Short:   "Receive one or more files",
+	Long:    "Receive one or more files. The destination directory can be set with the config wizard, or by passing the --output flag. If none of the above are set, the current working directory will be used as a destination directory.",
+	Example: `# Receive files in the current directory
+qrcp receive
+# Receive files in a specific directory
+qrcp receive --output /tmp
+`,
+	RunE: receiveCmdFunc,
+}
